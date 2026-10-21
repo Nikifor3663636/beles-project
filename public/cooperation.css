@@ -1,0 +1,196 @@
+.beles-cooperation {
+  background: #fffaf6;
+  color: #101a3d;
+  padding: 88px 24px;
+  font: inherit;
+}
+.coop-inner {
+  max-width: 1240px;
+  margin: auto;
+}
+.coop-kicker {
+  color: #a40059;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+.beles-cooperation h2 {
+  font-size: clamp(28px, 4vw, 50px);
+  line-height: 1.1;
+  max-width: 900px;
+  margin: 18px 0;
+}
+.coop-lead {
+  font-size: 18px;
+  max-width: 730px;
+  line-height: 1.65;
+  margin: 24px 0 36px;
+}
+.coop-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 72px;
+}
+.coop-grid.coop-intro {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.coop-grid article {
+  background: white;
+  border: 1px solid #e9d9df;
+  border-radius: 24px;
+  padding: 28px;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  transition: transform 0.18s;
+}
+.coop-grid article:focus-within,
+.coop-grid article:hover {
+  transform: translateY(-4px);
+  border-color: #a40059;
+}
+.coop-grid h3 {
+  font-size: 22px;
+  line-height: 1.3;
+  margin: 18px 0;
+}
+.coop-grid p {
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0 0 24px;
+}
+.coop-grid svg {
+  width: 80px;
+  height: 80px;
+  color: #a40059;
+}
+.coop-number {
+  font-size: 16px;
+  font-weight: 800;
+  color: #a40059;
+}
+.beles-cooperation button,
+#coop-form button {
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  border: 0;
+  border-radius: 999px;
+  padding: 12px 20px;
+  background: #a40059;
+  color: white;
+  min-height: 44px;
+}
+.coop-grid button {
+  margin-top: auto;
+}
+.coop-cta {
+  padding: 42px;
+  background: #f3e6ef;
+  border-radius: 28px;
+}
+.coop-cta p {
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 760px;
+  margin: 24px 0;
+}
+.beles-cooperation :focus-visible,
+#coop-dialog :focus-visible {
+  outline: 3px solid #0075cc;
+  outline-offset: 4px;
+}
+#coop-dialog {
+  margin: auto;
+  max-width: min(580px, calc(100vw - 24px));
+  max-height: 90dvh;
+  overflow: auto;
+  border: 0;
+  border-radius: 24px;
+  padding: 28px;
+  color: #101a3d;
+  background: #fffaf6;
+}
+#coop-dialog::backdrop {
+  background: #0009;
+}
+#coop-form {
+  display: grid;
+  gap: 16px;
+}
+#coop-form label {
+  display: grid;
+  gap: 8px;
+}
+#coop-form :is(input, textarea) {
+  font: inherit;
+  padding: 12px;
+  border: 1px solid #766b74;
+  border-radius: 10px;
+  background: white;
+  color: #101a3d;
+  min-width: 0;
+  width: 100%;
+}
+#coop-close {
+  justify-self: end;
+}
+#coop-product-fields {
+  display: grid;
+  gap: 16px;
+}
+#coop-product-fields[hidden] {
+  display: none;
+}
+html.a-dk .beles-cooperation {
+  background: #141414;
+  color: #f5f5f5;
+}
+html.a-dk .coop-grid article,
+html.a-dk .coop-cta,
+html.a-dk #coop-dialog {
+  background: #1c1c1c;
+  color: #f5f5f5;
+}
+html.a-dk .coop-kicker,
+html.a-dk .coop-number,
+html.a-dk .coop-grid svg {
+  color: #ff8bc7;
+}
+@media (max-width: 1000px) {
+  .coop-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .coop-grid,
+  .coop-grid.coop-intro {
+    grid-template-columns: 1fr;
+  }
+  .beles-cooperation {
+    padding: 48px 18px;
+  }
+  .coop-cta {
+    padding: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .coop-grid article {
+    transition: none;
+    transform: none !important;
+  }
+}
+
+.coop-help {
+  margin: -28px 0 64px;
+  padding: 24px 0;
+  border-bottom: 1px solid #9d8791;
+}
+.coop-help p {
+  margin: 14px 0 20px;
+  line-height: 1.6;
+}
+.coop-help h3 {
+  font-size: 26px;
+}

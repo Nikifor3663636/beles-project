@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="uk"
+  ><head
+    ><meta charset="utf-8" />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="96x96" /><meta
+      name="viewport"
+      content="width=device-width,initial-scale=1" /><title>BelesBrands · Адміністрування</title
+    ><link rel="stylesheet" href="/admin/style.css?v=20261021-7" /><script
+      src="/admin/analytics.js?v=20261021-7"
+      defer
+    ></script
+    ><script src="/admin/feedback.js?v=20261021-7" defer></script
+    ><script src="/admin/analytics-chart.js?v=20261021-7" defer></script
+    ><script src="/admin/webauthn-browser.js?v=13.3.0" defer></script
+    ><script src="/admin/app.js?v=20261021-7" defer></script
+    ><script src="/admin/integrations.js?v=20261021-7" defer></script
+    ><script src="/admin/site-design.js?v=20261021-7" defer></script
+    ><script src="/admin/storage.js?v=20261021-7" defer></script
+    ><script src="/admin/security.js?v=20261021-7" defer></script></head
+  ><body
+    ><header
+      ><a href="/admin" class="logo">Белес<span>Панель керування</span></a
+      ><div id="actions" hidden
+        ><a class="siteLink" href="/" target="_blank" rel="noopener">Відкрити сайт ↗</a
+        ><a href="/api/backup">Резервна копія</a><button id="password">Мій акаунт</button
+        ><button id="logout">Вийти</button></div
+      ></header
+    ><div id="notice" role="status" aria-live="polite"></div
+    ><main id="auth"
+      ><section class="login"
+        ><p class="eyebrow">ВАШ САЙТ. ВАШ КОНТЕНТ.</p><h1 id="authTitle">Вітаємо у Beles</h1
+        ><p id="setupInfo"></p
+        ><form id="loginForm"
+          ><label id="tokenLabel" hidden
+            >Одноразовий код налаштування<input name="token" autocomplete="off" /></label
+          ><label>Логін<input name="username" autocomplete="username" required /></label
+          ><label
+            >Пароль<input
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required /></label
+          ><label id="twoFactorLabel" hidden
+            >Код 2FA або резервний код<input name="code" autocomplete="one-time-code" /></label
+          ><label id="confirmLabel" hidden
+            >Повторіть пароль<input
+              name="confirmPassword"
+              type="password"
+              autocomplete="new-password" /></label
+          ><button class="primary">Увійти</button></form
+        ><p class="loginNote">Доступ до розділів призначає головний адміністратор.</p></section
+      ></main
+    ><main id="workspace" hidden
+      ><aside
+        ><p class="eyebrow">КЕРУВАННЯ</p><nav id="nav"></nav
+        ><div class="asideHelp"
+          ><strong>Як внести зміни?</strong
+          ><p
+            >Оберіть розділ, відкрийте запис та натисніть «Зберегти». Потім оновіть сторінку
+            сайту.</p
+          ><p>Фото й PDF зберігаються на вашому хостингу.</p></div
+        ></aside
+      ><section class="content"
+        ><div id="stats"></div
+        ><div class="heading"
+          ><div
+            ><p class="eyebrow">КАТАЛОГ BELES</p><h1 id="sectionTitle"></h1
+            ><p id="sectionHint"></p></div
+          ><button id="importProduct" hidden>Імпорт за посиланням</button
+          ><button id="new" class="primary">+ Додати</button></div
+        ><div class="toolbar"
+          ><input
+            id="search"
+            placeholder="Знайти за назвою, брендом або артикулом"
+            aria-label="Пошук"
+          /><select id="brandFilter" aria-label="Фільтр бренду"
+            ><option value="">Усі бренди</option></select
+          ><select id="statusFilter" aria-label="Фільтр статусу"
+            ><option value="">Усі статуси</option
+            ><option value="published">Опубліковані</option
+            ><option value="draft">Приховані</option></select
+          ></div
+        ><div class="resultsLine"
+          ><p id="count"></p><span>Порядок на сайті — від меншого номера до більшого</span></div
+        ><div id="list"></div></section></main
+    ><dialog id="editor"
+      ><form id="editForm"
+        ><div class="dialogHead"
+          ><div><p class="eyebrow">BELES / РЕДАГУВАННЯ</p><h2 id="editTitle">Запис</h2></div
+          ><button type="button" id="close" aria-label="Закрити редактор">Закрити</button></div
+        ><div id="fields"></div
+        ><div class="dialogFoot"
+          ><button type="button" class="danger" id="delete">Видалити запис</button
+          ><span id="saveHint">Зміни ще не збережено</span
+          ><button class="primary" id="save">Зберегти зміни</button></div
+        ></form
+      ></dialog
+    ><dialog id="account"
+      ><form id="accountForm"
+        ><div class="dialogHead"
+          ><h2>Мій акаунт</h2><button id="accountClose" type="button">Закрити</button></div
+        ><div class="accountBody"
+          ><p id="accountInfo"></p
+          ><p class="helper">Кожен адміністратор має власний пароль і призначені права доступу.</p
+          ><label
+            >Поточний пароль<input
+              name="current"
+              type="password"
+              autocomplete="current-password"
+              required /></label
+          ><label>Код 2FA (якщо увімкнено)<input name="code" autocomplete="one-time-code" /></label
+          ><label
+            >Новий пароль<input
+              name="password"
+              type="password"
+              autocomplete="new-password"
+              minlength="12"
+              required /></label
+          ><label
+            >Повторіть новий пароль<input
+              name="confirm"
+              type="password"
+              autocomplete="new-password"
+              minlength="12"
+              required /></label></div
+        ><div class="dialogFoot"><button class="primary">Змінити пароль</button></div></form
+      ><section class="accountBody admin-users"
+        ><h3>Адміністратори</h3><ul id="adminUsers"></ul><p id="adminLimit" class="helper"></p
+        ><form id="addAdminForm"
+          ><h3>Додати адміністратора</h3
+          ><label
+            >Логін нового адміністратора<input
+              name="username"
+              autocomplete="off"
+              minlength="3"
+              maxlength="80"
+              required /></label
+          ><label
+            >Пароль нового адміністратора<input
+              name="password"
+              type="password"
+              autocomplete="new-password"
+              minlength="12"
+              maxlength="1000"
+              required /></label
+          ><label
+            >Повторіть пароль<input
+              name="confirm"
+              type="password"
+              autocomplete="new-password"
+              minlength="12"
+              required /></label
+          ><button class="primary" id="addAdminSubmit">Створити адміністратора</button></form
+        ></section
+      ></dialog
+    ></body
+  ></html
+>

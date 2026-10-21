@@ -1,0 +1,40 @@
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/uploads/a13d9b41b0a471ce58f0e46d377fa3cc76615e4632c3b15eb397caadf7a13f0a.ttf)
+    format('truetype');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/uploads/6bad1a774228464cc88b8b0271555b266f7a3c64a7bedf15e165fdab4f6ac0ce.ttf)
+    format('truetype');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/uploads/b8f802f05b322a7345805f5b89f8bb976604cc719a91530918d5ce3c47160950.ttf)
+    format('truetype');
+}
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/uploads/7ac0baee243b4d54ea0282ceb7e017a455f064462989620720215727e1b9129c.ttf)
+    format('truetype');
+}
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/uploads/2f1f467b85c320c52e054b6d937fc98b0b2e8319bd181f3857e3ab844255bf42.ttf)
+    format('truetype');
+}

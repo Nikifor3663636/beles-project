@@ -1,0 +1,31 @@
+{
+  "name": "beles-standalone",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Beles website and admin on one Node.js host",
+  "scripts": {
+    "start": "node server.cjs",
+    "test": "node test.cjs && node test-features.cjs && node test-import.cjs && node test-render.cjs && node test-google-analytics.cjs && node test-security.cjs && node test-outage.cjs && node test-contact-message.cjs && node test-admin-improvements.cjs",
+    "format": "prettier --write \"*.cjs\" \"tools/**/*.cjs\" \"public/**/*.{js,css,html}\" data/base.html package.json .prettierrc.json",
+    "format:check": "prettier --check \"*.cjs\" \"tools/**/*.cjs\" \"public/**/*.{js,css,html}\" data/base.html package.json .prettierrc.json",
+    "test:database": "node test-database.cjs",
+    "db:migrate": "node tools/database.cjs migrate",
+    "db:import": "node tools/database.cjs import",
+    "db:verify": "node tools/database.cjs verify"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "prettier": "3.6.2"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "3.1153.0",
+    "@simplewebauthn/browser": "13.3.0",
+    "@simplewebauthn/server": "13.3.3",
+    "acorn": "8.15.0",
+    "parse5": "7.3.0",
+    "pg": "8.23.1",
+    "sharp": "0.35.5"
+  }
+}
