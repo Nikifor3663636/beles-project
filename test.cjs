@@ -193,6 +193,42 @@ const test = require('node:assert/strict'),
     );
     test.equal(feedback.status, 200);
     test.equal((await req('/api/feedback')).body.items.length, 1);
+    const messageId = (await req('/api/feedback')).body.items[0].id;
+    test.equal((await req('/api/feedback', 'DELETE', { id: messageId }, false)).status, 401);
+    test.equal(
+      (
+        await fetch(origin + '/api/feedback', {
+          method: 'DELETE',
+          headers: {
+            Cookie: cookie,
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': 'invalid',
+          },
+          body: JSON.stringify({ id: messageId }),
+        })
+      ).status,
+      403,
+    );
+    test.equal((await req('/api/feedback', 'DELETE', { ids: [] })).status, 400);
+    test.equal((await req('/api/feedback', 'DELETE', { ids: [messageId] })).body.deleted, 1);
+    test.equal((await req('/api/feedback')).body.items.length, 0);
+    for (let i = 0; i < 2; i++)
+      test.equal(
+        (
+          await req(
+            '/api/feedback',
+            'POST',
+            { name: 'Batch test', contact: 'test@example.com', message: 'Batch ' + i },
+            false,
+          )
+        ).status,
+        200,
+      );
+    const batchIds = (await req('/api/feedback')).body.items.map((item) => item.id);
+    test.equal((await req('/api/feedback', 'DELETE', { ids: batchIds })).body.deleted, 2);
+    test.equal((await req('/api/feedback')).body.items.length, 0);
+    const logo = require('./public/brand-logos/manifest.json').find((item) => item.src);
+    test.equal((await fetch(origin + logo.src)).status, 200);
     const del = await req('/api/catalog', 'DELETE', {
       originalKey: record.itemKey,
       originalKind: 'product',

@@ -1,0 +1,289 @@
+[
+  {
+    "name": "Alloy Smart",
+    "old": "/uploads/bb2bff189ee99b93147edcb87e5cbef1a62e4c3eb0e15756d561ce1f8db39685.webp",
+    "status": "original-small",
+    "width": 138,
+    "height": 110,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1770127591.png"
+  },
+  {
+    "name": "Alpha Kids Generation",
+    "old": "/uploads/ddac701d61463b19586037fdf428a8906bacdcf801e327d5b102dd735ee5a907.webp",
+    "src": "/assets/brand-logos/e46e4647ede11dc1c9cea9ba224cd7c01d8508ce75a988324e5fbfa743914540.jpg",
+    "width": 490,
+    "height": 400,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1709632084.jpg",
+    "status": "upgraded"
+  },
+  {
+    "name": "Aojiate",
+    "old": "/uploads/a6d9a4d9553a9c2ba5e9a0a7f8b851747571ff36f5d56986927459d9fe21721b.webp",
+    "src": "/assets/brand-logos/bc2e859faf74fd2e9adcbfaac28b8afddac1f1332b95d23cf24a36601c127fdf.png",
+    "width": 1255,
+    "height": 444,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1790073488.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "BabyChic",
+    "old": "/uploads/218877d976a5b248df4e70fd6269655fbc249ddcb20711b62f08db2e1c4bd833.webp",
+    "src": "/assets/brand-logos/c508c5518415f39a5e46b141c3bcd14a2a898e5b2f9459364d32603cb3960e3e.png",
+    "width": 592,
+    "height": 458,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1790073641.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "Bambi",
+    "old": "/uploads/fd5f2e1e632a4a961f3bcdc70c233f131b3cf8f374f3d4c51d761dd4cbac9381.webp",
+    "width": 189,
+    "height": 140,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1594731441.jpg",
+    "status": "kept-original-identity"
+  },
+  {
+    "name": "BambiRacer",
+    "old": "/uploads/a2d04eeba9d64e3973d70335950793ef119ecebdde1e6297fe1e83188cbd1b40.webp",
+    "width": 1497,
+    "height": 312,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1697092246.png",
+    "status": "kept-original-identity"
+  },
+  {
+    "name": "BEI DI YUAN TOYS",
+    "old": "/uploads/88f9b32c6ddb7254a46a684e515fc7732b8cb42efd691d7e487aed41f7ed3b97.webp",
+    "src": "/assets/brand-logos/bbac6d767e676949cc48f4a1a9b6201821d63c82adecceb280c00e358dafae19.jpg",
+    "width": 1195,
+    "height": 1075,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1790334919.jpg",
+    "status": "upgraded"
+  },
+  {
+    "name": "Beibe Good",
+    "old": "/uploads/be49518ea851454165cc71864ae50a8c02e42039ed58bd02915abe111a837181.webp",
+    "src": "/assets/brand-logos/9ae6fb25341406493c4ec04d728561543077bdddfb2453265402ec4dda40da02.jpg",
+    "width": 371,
+    "height": 108,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1700929980.jpg",
+    "status": "upgraded"
+  },
+  {
+    "name": "BOPTOYS",
+    "old": "/uploads/764e6af43ef462c5b88d53dbd5395aca4a69d36da2d8159cd40f72fc7b7dd15d.webp",
+    "src": "/assets/brand-logos/a6c0046fa38003fc9e42502bfeaca927d0683dd2dee7f1f443e396ef64267a31.png",
+    "width": 926,
+    "height": 623,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1757925344.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "Carioca",
+    "old": "/uploads/664489724d0bae694bb94a6058614f41c0b13344f848473e64a1f2d624a7646a.webp",
+    "status": "original-small",
+    "width": 189,
+    "height": 140,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/CARIOCA.jpg"
+  },
+  {
+    "name": "ELCAMINO",
+    "old": "/uploads/0528d0dd1e41bb3064accde2a534320e1864b07ae2863e783610c4a6e76a8fb3.webp",
+    "status": "original-small",
+    "width": 189,
+    "height": 140,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/El_Camino_color_logo_2.jpg"
+  },
+  {
+    "name": "HOLA",
+    "old": "/uploads/37df4537d49c2d87326178bc4c566b412b1cdfc6fbf6d4868d8806a16410af10.webp",
+    "width": 850,
+    "height": 236,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1724396230.png",
+    "status": "kept-original-identity"
+  },
+  {
+    "name": "HUANGGUAN",
+    "old": "/uploads/ccae0be4a6553698eab7354033368d8982ff66be9eb089c306a63b76b6962d84.webp",
+    "src": "/assets/brand-logos/e2cf92468dfe905a7ac481dfe93bb1fb0a2f081637f4cb429b6cbe84ecf98076.png",
+    "width": 556,
+    "height": 458,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1790074717.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "I'm just a girl",
+    "old": "/uploads/7fcb49a64601e13b4fc290f343958ad2fbfc1faa2470c60f94754c45f1c7bc76.webp",
+    "src": "/assets/brand-logos/25c0b97178eccfb196f49739ac5e98c883f7f3b157d2089552fb3ce80354822c.png",
+    "width": 2083,
+    "height": 2083,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1789563396.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "iM.Master",
+    "old": "/uploads/271dac555d6db80a4c42837fa205b9b6d0bd0b84b8c9978785af70436eff0934.webp",
+    "src": "/assets/brand-logos/354673662aedb47db6c59f901ccde6db80ad7d4771a1d8569aec073b93217757.jpg",
+    "width": 599,
+    "height": 599,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1765448322.jpg",
+    "status": "upgraded"
+  },
+  {
+    "name": "Lindatoy",
+    "old": "/uploads/428728b32f1a1d5e751825a3ea5e8271e6c6dbade5d79cac6d69a07324bcf145.webp",
+    "src": "/assets/brand-logos/9b04514576829e02f4caf63047b46e875afd90e22e4de76420f90f087d2dabbc.png",
+    "width": 641,
+    "height": 288,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1759127713.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "MaxPlay",
+    "old": "/uploads/a3bec0caa9206dccd263c3e4071b64c5e26c2ae04de2391d5faa343a75c48861.avif",
+    "status": "source-needed"
+  },
+  {
+    "name": "Maytree",
+    "old": "/uploads/ff1374f1887a2e0d36bd266eef06bc2fff3ffa1927282fbbdac4b73bbc367de9.webp",
+    "status": "original-small",
+    "width": 250,
+    "height": 113,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1769153359.jpg"
+  },
+  {
+    "name": "Mondo",
+    "old": "/uploads/11e530bfa0b75b95f432d4a0784bc499930ec3437462312ca55d0a0050b6ce2a.webp",
+    "src": "/assets/brand-logos/5d664af9be6c8f59d5e7d826b3c7fc44d9ea1240d7f82298ce65f05f63bae370.png",
+    "width": 1182,
+    "height": 1182,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1718964993.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "MONDO MOTORS",
+    "old": "/uploads/bf6dd7f789c31415310d467722f829030b47c88fa04fc1f95a9f286f4ebd6ee9.webp",
+    "src": "/assets/brand-logos/1d880b3ef7cd104fee6973c6cde3bcdf4419198a8d5c3712212e9fd0374e41ed.png",
+    "width": 355,
+    "height": 152,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1734696301.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "OLIVO",
+    "old": "/uploads/ccbfe00ec9fa7f56321b365220c4e141f3ac3104462cfcb50dac356daa5f152d.webp",
+    "src": "/assets/brand-logos/5de969477d316b9c82e154112eb6d9b90bebd391aa3c0b1957cde5b7629aaa73.png",
+    "width": 1490,
+    "height": 560,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1731661271.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "PlayfulMario",
+    "old": "/uploads/e959d23bf6dccba164ea75db314d10c070632011f88d9c1aca25470200a88688.webp",
+    "src": "/assets/brand-logos/7e1a6018814a320ce87933ee87cd4369b832988b0c9cf48fc9a2e55f2ede8660.png",
+    "width": 2236,
+    "height": 1700,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1787741820.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "Profi",
+    "old": "/uploads/86f45ee01c1ab621ea0ed6abc0f8580ff1d24b788d3372d7bb6ed12a405507a5.webp",
+    "status": "original-small",
+    "width": 189,
+    "height": 140,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/Profi_2.jpg"
+  },
+  {
+    "name": "Profi Kids",
+    "old": "/uploads/c675f09b737d4b9d8935c1d8e04c3b7b4b6762eb5b6fd2c7fbe5fcfbce439979.webp",
+    "status": "source-needed"
+  },
+  {
+    "name": "Rastar",
+    "old": "/uploads/d6695531607d0438744fb4eafa102e128d33229b710127306d8c137b8e0a233b.webp",
+    "src": "/assets/brand-logos/7d990f226a237276dbbd1221637fcce544a2128f5b5ca20cb26f05d16a31a712.png",
+    "width": 1285,
+    "height": 538,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1738749207.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "SLUBAN",
+    "old": "/uploads/23c6a65e1f61821b36faad0671783a48998dd323f18438bc2f6d1ebaea50af46.webp",
+    "status": "original-small",
+    "width": 180,
+    "height": 106,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1774357271.jpg"
+  },
+  {
+    "name": "Teamsterz",
+    "old": "/uploads/a187f38e091850cda09e13d3620910acf12bf44c38af80b5cf536681d18fdf8c.webp",
+    "src": "/assets/brand-logos/79659f3d1c81f942ccc8f883f88c4cde6b5310367215989356edccfbb311c45d.png",
+    "width": 1502,
+    "height": 358,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1643696921.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "TM Car Masters (ToyStar)",
+    "old": "/uploads/b01d8046e570edff80f472fa9b2050e2795c9ec8e6a71e692ba2b6dad0af3ff3.webp",
+    "src": "/assets/brand-logos/8b65fb396e85a118c4836b1f78a710e6c2a666d4ca287b22706bca9c2f6d4ffa.png",
+    "width": 200,
+    "height": 200,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1737726446.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "TM Dumia",
+    "old": "/uploads/057f658d170cac61b998d485708c69b557b32916bdd2ab2a51bca586a5a39cfc.webp",
+    "src": "/assets/brand-logos/176a911da402fac453ded7430493977454aff32c40a33ebd0b01bdd15ad87420.png",
+    "width": 825,
+    "height": 326,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1790327352.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "TM Luna Baby",
+    "old": "/uploads/f52025fc74438c4228cfa4c46ee379d0f4ac5a2f23749bdd0943ddf0429c0d9c.webp",
+    "src": "/assets/brand-logos/a3e5396b2b8638ce05f978b6cc24917e0d75fd0a90032ef1c1fb0f419314e72e.jpg",
+    "width": 1000,
+    "height": 1000,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1789990477.jpg",
+    "status": "upgraded"
+  },
+  {
+    "name": "Tookytoy",
+    "old": "/uploads/cbd058e4585c810b31c374a3854d8cdb75ff53ebe5a698cfada7ae68b160148a.avif",
+    "src": "/assets/brand-logos/4f9c05ddff780104dbf19344638a84de381dc05e1de5082bd3cc4db2020aaa4e.png",
+    "width": 2520,
+    "height": 461,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1727072714.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "UJIE",
+    "old": "/uploads/cee87f2719b2873ba606524a98408a0e6c161d226ab4c2144c7d90b06278a7b2.webp",
+    "status": "original-small",
+    "width": 214,
+    "height": 109,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1687263586.png"
+  },
+  {
+    "name": "Vogue Viva",
+    "old": "/uploads/2ac459826c13fd4d7c78f9ee0846b390cfc4f3329a3604465dd4e12cc44126b7.avif",
+    "src": "/assets/brand-logos/498c31489d9721f94bb55545144ac994f2e67fcb3b1d333cff15bfe883acb976.png",
+    "width": 1000,
+    "height": 1000,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/1789562835.png",
+    "status": "upgraded"
+  },
+  {
+    "name": "WinFun",
+    "old": "/uploads/db74caf54c15123e425a6776029e6343054d8d189be6cbfa8b767f3b890dd625.webp",
+    "width": 458,
+    "height": 458,
+    "source": "https://chudo-ostriv.com.ua/media/brands/brand/win-fun.jpg",
+    "status": "kept-original-identity"
+  }
+]

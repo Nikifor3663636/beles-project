@@ -591,6 +591,15 @@ const { spawn } = require('node:child_process');
     const leadList = (await request('/api/feedback', 'GET', undefined, owner)).body.items;
     assert.equal(leadList[0].theme, 'delivery');
     assert.equal(leadList[0].shopFormat, 'shop');
+    const deletedFeedback = await request(
+      '/api/feedback',
+      'DELETE',
+      { ids: [leadList[0].id] },
+      owner,
+    );
+    assert.equal(deletedFeedback.status, 200);
+    assert.equal(deletedFeedback.body.deleted, 1);
+    assert.equal((await request('/api/feedback', 'GET', undefined, owner)).body.items.length, 0);
     const analyticsPath = path.join(temp, 'analytics-test');
     fs.mkdirSync(analyticsPath);
     let now = Date.parse('2026-10-17T12:00:00Z');

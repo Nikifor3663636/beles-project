@@ -253,6 +253,16 @@ const server = http.createServer(async (req, res) => {
       if (await session(req)) return json(res, 200, { ok: true, tracked: false });
       return json(res, 200, { ok: true, tracked: analytics.ingest(event, req) });
     }
+    if (
+      req.method === 'GET' &&
+      /^\/assets\/brand-logos\/[a-f0-9]{64}\.(png|jpg|webp|avif)$/.test(route)
+    )
+      return serve(
+        res,
+        path.join(ROOT, 'public/brand-logos', path.basename(route)),
+        route.endsWith('.jpg') ? 'image/jpeg' : 'image/' + path.extname(route).slice(1),
+        req,
+      );
     if (req.method === 'GET' && route === '/assets/fonts.css')
       return serve(res, path.join(ROOT, 'public/fonts.css'), 'text/css');
     if (
@@ -597,6 +607,28 @@ const server = http.createServer(async (req, res) => {
         );
       if (route === '/api/feedback' && req.method === 'GET')
         return json(res, 200, { items: await read(feedbackFile, []) });
+      if (route === '/api/feedback' && req.method === 'DELETE') {
+        const b = await body(req, 16384);
+        const ids = b.ids || [b.id];
+        if (
+          !Array.isArray(ids) ||
+          !ids.length ||
+          ids.length > 100 ||
+          ids.some((id) => typeof id !== 'string' || !/^[a-f0-9-]{36}$/i.test(id))
+        )
+          fail(400, 'Select 1–100 messages');
+        const selected = new Set(ids);
+        const deleted = await repository.mutate(
+          'feedback.json',
+          (items) => {
+            const remaining = items.filter((item) => !selected.has(item.id));
+            return { value: remaining, result: items.length - remaining.length };
+          },
+          [],
+        );
+        await audit.record('feedback.delete', s.userId, 'messages:' + deleted);
+        return json(res, 200, { ok: true, deleted });
+      }
       if (route === '/api/feedback' && req.method === 'PATCH') {
         const b = await body(req, 8192);
         if (!['new', 'done'].includes(b.status)) fail(400, 'Invalid feedback status');

@@ -26,7 +26,11 @@
     async render(root) {
       dispose();
       let data = await api('/api/site-design');
-      let part = data.parts.find((p) => p.id.startsWith('header-'))?.id || 'html';
+      const firstPart = () =>
+        data.parts.find((p) => p.id.startsWith('header-'))?.id ||
+        data.parts.find((p) => !['html', 'css'].includes(p.id) && !p.id.startsWith('style-'))?.id ||
+        'colors';
+      let part = firstPart();
       let timer,
         version = 0,
         active = true,
@@ -58,12 +62,15 @@
         state = el('span', 'Опубліковано', 'studio-state');
       const editorHead = el('div', undefined, 'studio-panel-head');
       editorHead.append(heading, state);
+      // Code editing is hidden from the admin: blocks and elements are edited through fields only.
       const mode = el('select');
       mode.setAttribute('aria-label', 'Режим редактора');
       mode.add(new Option('Без коду · властивості', 'visual'));
-      mode.add(new Option('Код елемента / блоку', 'code'));
+      mode.hidden = true;
       const properties = el('div', undefined, 'element-properties');
-      let elementChanges = {};
+      const blockForm = el('div', undefined, 'element-properties block-fields');
+      let elementChanges = {},
+        resetToOriginal = false;
       const colors = el('div', undefined, 'design-colors'),
         codeBox = el('div', undefined, 'studio-code');
       const lines = el('pre', '1', 'studio-lines');
@@ -78,13 +85,15 @@
       const original = el('a', '↓ Оригінал'),
         current = el('a', '↓ Опублікований код'),
         reset = el('button', 'Відновити оригінал');
-      tools.append(original, current, reset);
+      original.hidden = current.hidden = true;
+      codeBox.hidden = true;
+      tools.append(reset);
       const hint = el(
         'p',
-        'Властивості змінюють вибраний елемент без коду. Динамічні товари, бренди та переклади керуються також у розділах каталогу й текстів. Код доступний окремим режимом.',
+        'Змінюйте тексти, посилання та зображення у полях — без коду. Динамічні товари, бренди та переклади керуються також у розділах каталогу й текстів.',
         'helper',
       );
-      editor.append(editorHead, mode, properties, colors, codeBox, tools, hint);
+      editor.append(editorHead, mode, properties, blockForm, colors, codeBox, tools, hint);
       const previewPanel = el('section', undefined, 'studio-result'),
         previewHead = el('div', undefined, 'studio-panel-head');
       const autoLabel = el('label', 'Автоперегляд'),
@@ -165,9 +174,12 @@
           publish.click();
         }
       };
+      const isCodeOnly = (id) => id === 'html' || id === 'css' || id.startsWith('style-');
+      const isBlock = (id) => /^(header|footer|section|aside)-/.test(id);
+      const editableParts = () => data.parts.filter((p) => !isCodeOnly(p.id));
       function renderList() {
         list.replaceChildren();
-        for (const entry of data.parts.filter((p) =>
+        for (const entry of editableParts().filter((p) =>
           p.label.toLowerCase().includes(search.value.toLowerCase()),
         )) {
           const button = el('button', entry.label);
@@ -178,12 +190,114 @@
         }
       }
       search.oninput = renderList;
+      const blockLabels = {
+        h1: 'Заголовок',
+        h2: 'Заголовок',
+        h3: 'Підзаголовок',
+        h4: 'Підзаголовок',
+        h5: 'Підзаголовок',
+        h6: 'Підзаголовок',
+        p: 'Абзац',
+        a: 'Посилання',
+        button: 'Кнопка',
+        li: 'Пункт списку',
+        label: 'Підпис поля',
+        small: 'Дрібний текст',
+        strong: 'Виділений текст',
+        b: 'Виділений текст',
+        em: 'Курсив',
+        span: 'Текст',
+        div: 'Текст',
+        summary: 'Заголовок розкривного блоку',
+        figcaption: 'Підпис зображення',
+        option: 'Варіант вибору',
+      };
+      // Splits a block into plain text / link / image fields and writes edits back to its HTML.
+      function blockFields() {
+        blockForm.replaceChildren();
+        blockForm.hidden = !isBlock(part);
+        if (blockForm.hidden) return;
+        const template = document.createElement('template');
+        template.innerHTML = code.value;
+        const canWrite = hasPermission('design.write');
+        const sync = () => {
+          code.value = template.innerHTML;
+          changed();
+        };
+        const field = (title, value, multiline, apply) => {
+          const label = el('label', title),
+            input = el(multiline ? 'textarea' : 'input');
+          input.value = value;
+          input.disabled = !canWrite;
+          input.oninput = () => {
+            apply(input.value);
+            sync();
+          };
+          label.append(input);
+          blockForm.append(label);
+        };
+        const walker = document.createTreeWalker(template.content, NodeFilter.SHOW_TEXT);
+        const texts = [];
+        while (walker.nextNode()) {
+          const node = walker.currentNode;
+          if (
+            !node.data.trim() ||
+            node.parentElement?.closest('script,style,noscript,svg,template')
+          )
+            continue;
+          texts.push(node);
+        }
+        const skipped = template.content.querySelectorAll('script,style').length;
+        for (const node of texts) {
+          const tag = node.parentElement?.tagName.toLowerCase() || '';
+          const lead = node.data.match(/^\s*/)[0],
+            tail = node.data.match(/\s*$/)[0];
+          const text = node.data.trim().replace(/\s+/g, ' ');
+          field(blockLabels[tag] || 'Текст', text, text.length > 60, (value) => {
+            node.data = lead + value + tail;
+          });
+        }
+        for (const link of template.content.querySelectorAll('a[href]')) {
+          if (link.closest('script,template')) continue;
+          const name = link.textContent.trim().replace(/\s+/g, ' ').slice(0, 40);
+          field(
+            'Адреса посилання' + (name ? ' · ' + name : ''),
+            link.getAttribute('href'),
+            false,
+            (value) => link.setAttribute('href', value),
+          );
+        }
+        for (const image of template.content.querySelectorAll('img')) {
+          field('Адреса зображення', image.getAttribute('src') || '', false, (value) =>
+            image.setAttribute('src', value),
+          );
+          field('Опис зображення', image.getAttribute('alt') || '', false, (value) =>
+            image.setAttribute('alt', value),
+          );
+        }
+        for (const input of template.content.querySelectorAll('[placeholder]'))
+          field('Підказка в полі', input.getAttribute('placeholder'), false, (value) =>
+            input.setAttribute('placeholder', value),
+          );
+        if (!blockForm.childElementCount)
+          blockForm.append(
+            el(
+              'p',
+              'У цьому блоці немає текстів для редагування — його вміст формується автоматично (каталог, бренди, переклади).',
+              'helper',
+            ),
+          );
+        else if (skipped)
+          blockForm.prepend(
+            el('p', 'Службові скрипти та стилі блоку зберігаються без змін.', 'helper'),
+          );
+      }
       function propertyFields() {
         properties.replaceChildren();
         const selected = data.elements?.find((element) => element.id === part);
-        mode.hidden = !selected;
-        properties.hidden = !selected || mode.value !== 'visual';
-        codeBox.hidden = part === 'colors' || (!!selected && mode.value === 'visual');
+        properties.hidden = !selected;
+        codeBox.hidden = true;
+        blockFields();
         if (!selected) return;
         for (const [key, title] of Object.entries({
           text: 'Текст українською / основний',
@@ -228,14 +342,6 @@
             ),
           );
       }
-      mode.onchange = () => {
-        if (unsaved) {
-          mode.value = mode.value === 'visual' ? 'code' : 'visual';
-          note('Спочатку опублікуйте або відновіть чернетку, потім змініть режим.');
-          return;
-        }
-        propertyFields();
-      };
       function fill() {
         unsaved = false;
         version++;
@@ -247,8 +353,8 @@
         code.scrollTop = 0;
         lines.scrollTop = 0;
         updateLines();
-        codeBox.hidden = part === 'colors';
         elementChanges = {};
+        resetToOriginal = false;
         propertyFields();
         colors.hidden = part !== 'colors';
         colors.replaceChildren();
@@ -278,13 +384,13 @@
         schedule();
       }
       function selectPart(id) {
-        if (id === part || !data.parts.some((p) => p.id === id)) return;
+        if (id === part || isCodeOnly(id) || !data.parts.some((p) => p.id === id)) return;
         if (unsaved && !confirm('Відкинути незбережені зміни та перейти до іншого блоку?')) return;
         part = id;
         fill();
       }
       function payload() {
-        if ((part.startsWith('element-') || part.startsWith('live-')) && mode.value === 'visual')
+        if ((part.startsWith('element-') || part.startsWith('live-')) && !resetToOriginal)
           return {
             revision: data.revision,
             part,
@@ -390,7 +496,7 @@
         try {
           data = await api('/api/site-design', 'POST', change);
           if (!active) return;
-          if (!(part in data.values)) part = 'html';
+          if (!(part in data.values) || isCodeOnly(part)) part = firstPart();
           fill();
           status.textContent = 'Опубліковано. Попередня версія збережена.';
         } catch (error) {
@@ -406,13 +512,13 @@
         if (confirm('Опублікувати цей блок для відвідувачів сайту?')) save(payload());
       };
       reset.onclick = () => {
-        if (!confirm('Повернути вихідний код цього блоку в чернетку?')) return;
-        if (part.startsWith('element-') || part.startsWith('live-')) {
-          mode.value = 'code';
-          elementChanges = {};
-          propertyFields();
-        }
+        if (!confirm('Повернути початковий вигляд цього блоку в чернетку?')) return;
         code.value = data.originals[part];
+        if (part.startsWith('element-') || part.startsWith('live-')) {
+          resetToOriginal = true;
+          elementChanges = {};
+          properties.hidden = true;
+        } else blockFields();
         if (part === 'colors') {
           const values = JSON.parse(code.value);
           colors.querySelectorAll('input').forEach((i) => (i.value = values[i.dataset.color]));

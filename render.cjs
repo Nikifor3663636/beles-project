@@ -1,10 +1,20 @@
+const brandLogoManifest = require('./public/brand-logos/manifest.json');
+const brandLogoByImage = Object.fromEntries(
+  brandLogoManifest.filter((item) => item.src).map((item) => [item.old, item.src]),
+);
+
 function buildPage(base, rows) {
   base = require('./page-layout.cjs')(base);
   const unique = new Map();
   for (const r of rows) if (r.itemKey) unique.set(r.kind + ':' + r.itemKey, r);
   const data = [...unique.values()]
     .filter((r) => r.published !== false)
-    .sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    .sort((a, b) => (a.sort || 0) - (b.sort || 0))
+    .map((r) =>
+      r.kind === 'brand' && brandLogoByImage[r.image]
+        ? { ...r, image: brandLogoByImage[r.image] }
+        : r,
+    );
   const brands = data.filter((r) => r.kind === 'brand'),
     products = data.filter((r) => r.kind === 'product'),
     presentations = data.filter((r) => r.kind === 'presentation'),
@@ -21,7 +31,8 @@ function buildPage(base, rows) {
           "'": '&#39;',
         })[c] || c,
     );
-  const imageURL = (s) => (/^(?:https?:\/\/|\/uploads\/)/.test(String(s || '')) ? String(s) : '');
+  const imageURL = (s) =>
+    /^(?:https?:\/\/|\/uploads\/|\/assets\/brand-logos\/)/.test(String(s || '')) ? String(s) : '';
   const productTitle = (p) =>
     String(p.name || '') + (p.sku && !String(p.name || '').includes(p.sku) ? ' ' + p.sku : '');
   const catalog = brands.map((b) => ({
@@ -128,11 +139,11 @@ function buildPage(base, rows) {
   return html
     .replace(
       /<\/head\s*>/i,
-      '<link rel="stylesheet" href="/assets/product-gallery.css?v=20261022-1"></head>',
+      '<link rel="stylesheet" href="/assets/product-gallery.css?v=20261022-3"></head>',
     )
     .replace(
       /<\/body\s*>/i,
-      tail + '<script src="/assets/product-gallery.js?v=20261022-1" defer></script></body>',
+      tail + '<script src="/assets/product-gallery.js?v=20261022-2" defer></script></body>',
     );
 }
 

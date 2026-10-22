@@ -2,7 +2,8 @@
 window.BelesFeedback = {
   filters: {},
   async render(root) {
-    const { items } = await api('/api/feedback');
+    let { items } = await api('/api/feedback');
+    const selected = new Set();
     const controls = el('div', undefined, 'analytics-controls');
     const status = el('select'),
       theme = el('select'),
@@ -40,18 +41,76 @@ window.BelesFeedback = {
     from.setAttribute('aria-label', 'З дати UTC');
     to.setAttribute('aria-label', 'До дати UTC');
     const exportButton = el('button', 'Експорт вибірки CSV');
+    const reset = el('button', 'Скинути фільтри');
+    const choosePage = el('button', 'Вибрати сторінку');
+    const removeSelected = el('button', 'Видалити вибрані');
+    const source = el('select');
+    source.setAttribute('aria-label', 'Джерело звернення');
+    source.add(new Option('Усі джерела', ''));
+    for (const value of [...new Set(items.map((item) => item.source).filter(Boolean))])
+      source.add(new Option(value === 'contact-form' ? 'Контактна форма' : value, value));
     const refresh = el('button', 'Оновити');
     refresh.onclick = () => show().catch((error) => note(error.message));
     const list = el('div', undefined, 'feedback-inbox');
     const pager = el('div', undefined, 'analytics-controls');
     let page = 0,
       filtered = [];
-    const fields = { status, theme, order, from, to };
+    const fields = { status, theme, order, from, to, source };
     for (const [key, input] of Object.entries(fields))
       if (this.filters[key] !== undefined) input.value = this.filters[key];
-    controls.append(status, theme, order, from, to, refresh, exportButton);
+    controls.append(
+      status,
+      theme,
+      source,
+      order,
+      from,
+      to,
+      reset,
+      refresh,
+      exportButton,
+      choosePage,
+      removeSelected,
+    );
     root.append(controls, list, pager);
     const state = this.filters;
+    async function remove(ids) {
+      if (
+        !ids.length ||
+        !confirm(
+          `Видалити звернення (${ids.length}) назавжди? Це не видаляє листи з поштової скриньки.`,
+        )
+      )
+        return;
+      removeSelected.disabled = true;
+      try {
+        await api('/api/feedback', 'DELETE', { ids });
+        items = items.filter((item) => !ids.includes(item.id));
+        ids.forEach((id) => selected.delete(id));
+        note('Звернення видалено');
+        draw();
+      } catch (error) {
+        note(error.message);
+        draw();
+      }
+    }
+    reset.onclick = () => {
+      for (const input of [status, theme, source, from, to]) input.value = '';
+      order.value = 'newest';
+      $('search').value = '';
+      page = 0;
+      selected.clear();
+      draw();
+    };
+    choosePage.onclick = () => {
+      const visible = filtered.slice(page * 25, page * 25 + 25);
+      const all = visible.every((item) => selected.has(item.id));
+      for (const item of visible) {
+        if (all) selected.delete(item.id);
+        else if (selected.size < 100) selected.add(item.id);
+      }
+      draw();
+    };
+    removeSelected.onclick = () => remove([...selected]);
     function draw() {
       for (const [key, input] of Object.entries(fields)) state[key] = input.value;
       const query = $('search').value.trim().toLocaleLowerCase();
@@ -59,6 +118,7 @@ window.BelesFeedback = {
         (m) =>
           (!status.value || m.status === status.value) &&
           (!theme.value || m.theme === theme.value) &&
+          (!source.value || m.source === source.value) &&
           (!from.value || m.createdAt.slice(0, 10) >= from.value) &&
           (!to.value || m.createdAt.slice(0, 10) <= to.value) &&
           [m.name, m.contact, m.message, m.sku, m.source]
@@ -78,6 +138,10 @@ window.BelesFeedback = {
               : b.createdAt.localeCompare(a.createdAt),
       );
       page = Math.min(page, Math.max(0, Math.ceil(filtered.length / 25) - 1));
+      for (const id of selected) if (!filtered.some((item) => item.id === id)) selected.delete(id);
+      removeSelected.textContent = `Видалити вибрані (${selected.size})`;
+      removeSelected.disabled = !hasPermission('feedback.write') || !selected.size;
+      choosePage.disabled = !hasPermission('feedback.write') || !filtered.length;
       $('count').textContent =
         `${filtered.length} із ${items.length} звернень · нових ${items.filter((m) => m.status === 'new').length}`;
       list.replaceChildren();
@@ -85,6 +149,24 @@ window.BelesFeedback = {
       if (!filtered.length) list.append(el('p', 'Немає звернень за цими фільтрами.', 'helper'));
       for (const m of filtered.slice(page * 25, page * 25 + 25)) {
         const card = el('article', undefined, 'message' + (m.status === 'done' ? ' done' : ''));
+        const selection = el('label', 'Вибрати звернення');
+        const check = el('input');
+        check.type = 'checkbox';
+        check.checked = selected.has(m.id);
+        check.disabled = !hasPermission('feedback.write');
+        check.onchange = () => {
+          if (check.checked && selected.size >= 100) {
+            check.checked = false;
+            note('Максимум 100 звернень за раз');
+            return;
+          }
+          if (check.checked) selected.add(m.id);
+          else selected.delete(m.id);
+          removeSelected.disabled = !selected.size;
+          removeSelected.textContent = `Видалити вибрані (${selected.size})`;
+        };
+        selection.prepend(check);
+        card.append(selection);
         card.append(
           el('span', m.status === 'done' ? 'Опрацьовано' : 'Нове', 'message-status'),
           el('h3', m.name),
@@ -112,7 +194,10 @@ window.BelesFeedback = {
             button.disabled = false;
           }
         };
-        card.append(button);
+        const removeButton = el('button', 'Видалити');
+        removeButton.disabled = !hasPermission('feedback.write');
+        removeButton.onclick = () => remove([m.id]);
+        card.append(button, removeButton);
         list.append(card);
       }
       const previous = el('button', '← Назад'),
@@ -133,8 +218,9 @@ window.BelesFeedback = {
         next,
       );
     }
-    for (const input of [status, theme, order, from, to])
+    for (const input of [status, theme, order, from, to, source])
       input.onchange = () => {
+        selected.clear();
         page = 0;
         draw();
       };
