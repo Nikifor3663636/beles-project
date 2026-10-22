@@ -1831,3 +1831,34 @@ input[readonly] {
   overflow-wrap: anywhere;
   user-select: all;
 }
+
+.galleryEditorList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 12px 0;
+}
+.galleryEditorItem {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 120px;
+  padding: 8px;
+  border: 1px solid #ccd5e0;
+  border-radius: 12px;
+}
+.galleryEditorItem img {
+  width: 100%;
+  height: 90px;
+  object-fit: contain;
+  background: white;
+  border-radius: 8px;
+}
+.galleryEditorItem button {
+  font-size: 12px;
+  padding: 6px;
+}
+.galleryEditor > label {
+  display: block;
+  margin: 12px 0;
+}

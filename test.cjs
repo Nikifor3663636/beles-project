@@ -9,6 +9,7 @@ const test = require('node:assert/strict'),
     'server.cjs',
     'passkeys.cjs',
     'render.cjs',
+    'page-layout.cjs',
     'storage.cjs',
     'site-design.cjs',
     'visual-elements.cjs',
@@ -128,10 +129,25 @@ const test = require('node:assert/strict'),
       published: true,
       sort: 999,
       image: '',
+      images: ['https://example.com/front.jpg', 'https://example.com/back.jpg'],
     };
     let save = await req('/api/catalog', 'POST', { record, revision: catalog.revision });
     test.equal(save.status, 200);
     test.equal(save.body.rows.length, originalLength + 1);
+    test.deepEqual(
+      save.body.rows.find((row) => row.itemKey === record.itemKey).images,
+      record.images,
+    );
+    test.deepEqual(
+      (await req('/api/catalog')).body.rows.find((row) => row.itemKey === record.itemKey).images,
+      record.images,
+    );
+    for (const asset of [
+      '/assets/product-gallery.js',
+      '/assets/product-gallery.css',
+      '/admin/gallery.js',
+    ])
+      test.equal((await fetch(origin + asset)).status, 200);
     test.equal(
       (await req('/api/catalog', 'POST', { record, revision: catalog.revision })).status,
       409,

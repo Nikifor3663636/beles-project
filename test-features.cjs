@@ -13,6 +13,7 @@ const { spawn } = require('node:child_process');
       'server.cjs',
       'passkeys.cjs',
       'render.cjs',
+      'page-layout.cjs',
       'storage.cjs',
       'site-design.cjs',
       'visual-elements.cjs',

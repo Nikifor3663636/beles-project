@@ -1,4 +1,5 @@
 function buildPage(base, rows) {
+  base = require('./page-layout.cjs')(base);
   const unique = new Map();
   for (const r of rows) if (r.itemKey) unique.set(r.kind + ':' + r.itemKey, r);
   const data = [...unique.values()]
@@ -124,7 +125,15 @@ function buildPage(base, rows) {
     products: products.length,
   };
   const tail = `<script>(${applyLiveContent.toString()})(${json(changes)});<\/script>`;
-  return html.replace(/<\/body\s*>/i, tail + '</body>');
+  return html
+    .replace(
+      /<\/head\s*>/i,
+      '<link rel="stylesheet" href="/assets/product-gallery.css?v=20261022-1"></head>',
+    )
+    .replace(
+      /<\/body\s*>/i,
+      tail + '<script src="/assets/product-gallery.js?v=20261022-1" defer></script></body>',
+    );
 }
 
 // Serialized into the public page; keep this function independent of server variables.

@@ -70,3 +70,28 @@ for (const match of page.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/gi)) {
 console.log(
   'PASS: legacy/formatted template parity, catalog, translations, PDF, categories, script syntax',
 );
+
+const placePartners = require('./page-layout.cjs');
+const layout =
+  '<body><section id="bx-voices"><div>Partners</div></section><main><section id="brands"></section><div><section id="about"></section><section id="contacts"></section></div></main></body>';
+const arranged = placePartners(layout);
+assert.ok(arranged.indexOf('id="brands"') < arranged.indexOf('id="bx-voices"'));
+assert.ok(arranged.indexOf('id="bx-voices"') < arranged.indexOf('id="about"'));
+assert.equal((arranged.match(/id="bx-voices"/g) || []).length, 1);
+assert.equal(placePartners(arranged).replace(/\s+/g, ''), arranged.replace(/\s+/g, ''));
+const { validate } = require('./catalog.cjs');
+const product = { kind: 'product', name: 'Gallery', itemKey: 'gallery', published: true };
+assert.deepEqual(
+  validate({ ...product, images: ['https://example.com/a.jpg', 'https://example.com/a.jpg'] })
+    .images,
+  ['https://example.com/a.jpg'],
+);
+for (const images of [
+  'not-an-array',
+  [3],
+  ['javascript:alert(1)'],
+  ['/uploads/../../private.png'],
+  Array(21).fill('https://example.com/a.jpg'),
+])
+  assert.throws(() => validate({ ...product, images }));
+console.log('PASS: partner order in saved templates; gallery URL validation and limits');

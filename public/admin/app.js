@@ -67,6 +67,7 @@ const perType = {
     'descriptionUA',
     'descriptionEN',
     'image',
+    'images',
     'imageAlt',
     'categories',
     'accent',
@@ -498,7 +499,7 @@ function edit(record, draft) {
     {
       title: 'Фото та файли',
       hint: 'Виберіть файл з комп’ютера або вставте посилання.',
-      keys: ['image', 'imageAlt', 'pdfFile', 'presentationPage'],
+      keys: ['image', 'images', 'imageAlt', 'pdfFile', 'presentationPage'],
     },
     {
       title: 'Опис і тексти',
@@ -543,6 +544,22 @@ function edit(record, draft) {
     const grid = el('div', undefined, 'sectionGrid');
     section.append(grid);
     for (const key of keys) {
+      if (key === 'images') {
+        grid.append(
+          window.BelesGalleryEditor(r.images || [], {
+            csrf,
+            note,
+            changed: () => {
+              dirty = true;
+              $('saveHint').textContent = 'Є незбережені зміни';
+            },
+            busy: (value) => {
+              $('save').disabled = value;
+            },
+          }),
+        );
+        continue;
+      }
       const label = el('label', fields[key]);
       const multiline = /description|features|focus|assortment|textUA|textEN/.test(key);
       if (multiline || ['image', 'pdfFile', 'url', 'sourceURL', 'categories'].includes(key))
@@ -683,11 +700,13 @@ $('editForm').onsubmit = async (e) => {
   const r = current ? structuredClone(current) : { kind };
   for (const input of $('fields').querySelectorAll('[name]'))
     r[input.name] =
-      input.type === 'checkbox'
-        ? input.checked
-        : input.type === 'number'
-          ? Number(input.value)
-          : input.value;
+      input.name === 'images'
+        ? JSON.parse(input.value)
+        : input.type === 'checkbox'
+          ? input.checked
+          : input.type === 'number'
+            ? Number(input.value)
+            : input.value;
   r.title = r.name;
   try {
     const out = await api('/api/catalog', 'POST', {

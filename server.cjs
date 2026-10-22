@@ -179,7 +179,12 @@ const server = http.createServer(async (req, res) => {
       );
     if (
       req.method === 'GET' &&
-      ['/assets/cooperation.js', '/assets/cooperation.css'].includes(route)
+      [
+        '/assets/cooperation.js',
+        '/assets/cooperation.css',
+        '/assets/product-gallery.js',
+        '/assets/product-gallery.css',
+      ].includes(route)
     )
       return serve(
         res,
@@ -254,6 +259,7 @@ const server = http.createServer(async (req, res) => {
       req.method === 'GET' &&
       [
         '/admin/app.js',
+        '/admin/gallery.js',
         '/admin/storage.js',
         '/admin/security.js',
         '/admin/site-design.js',
