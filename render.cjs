@@ -18,7 +18,14 @@ function buildPage(base, rows) {
   const brands = data.filter((r) => r.kind === 'brand'),
     products = data.filter((r) => r.kind === 'product'),
     presentations = data.filter((r) => r.kind === 'presentation'),
-    content = data.filter((r) => r.kind === 'content');
+    content = data
+      .filter((r) => r.kind === 'content')
+      .filter((r) => !['benefit_1_title', 'benefit_1_body'].includes(r.name))
+      .map((r) =>
+        r.name === 'benefit_3_title'
+          ? { ...r, textUA: 'Доставка товару під замовлення', textEN: 'Delivery of items on request' }
+          : r,
+      );
   const safe = (s) =>
     String(s || '').replace(
       /[&<>"']/g,
