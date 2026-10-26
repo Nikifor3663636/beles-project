@@ -139,11 +139,40 @@ function buildPage(base, rows) {
   return html
     .replace(
       /<\/head\s*>/i,
-      '<link rel="stylesheet" href="/assets/product-gallery.css?v=20261022-3"></head>',
+      `<style id="beles-benefits-layout">
+        .beles-benefits {
+          max-width: 1040px !important;
+          grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          gap: clamp(16px, 2vw, 24px) !important;
+          align-items: stretch;
+        }
+        .beles-benefits > .beles-benefit {
+          box-sizing: border-box;
+          min-width: 0;
+          min-height: 220px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          border: 1px solid #d6e0e9;
+          border-radius: 24px;
+          padding: clamp(22px, 2.5vw, 32px);
+        }
+        .beles-benefits > .beles-benefit h3 { margin-bottom: 12px; }
+        .beles-benefits > .beles-benefit p { margin: 0; }
+        @media (max-width: 900px) {
+          .beles-benefits { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+        }
+        @media (max-width: 600px) {
+          .beles-benefits { grid-template-columns: 1fr !important; padding: 24px 16px; gap: 14px !important; }
+          .beles-benefits > .beles-benefit { min-height: 0; padding: 22px 20px; border-radius: 20px; }
+        }
+      </style><link rel="stylesheet" href="/assets/product-gallery.css?v=20261022-3"></head>`,
     )
     .replace(
       /<\/body\s*>/i,
-      tail + '<script src="/assets/product-gallery.js?v=20261022-2" defer></script></body>',
+      tail +
+        '<script src="/assets/visual-elements.js?v=20261026-1" defer></script>' +
+        '<script src="/assets/product-gallery.js?v=20261022-2" defer></script></body>',
     );
 }
 
